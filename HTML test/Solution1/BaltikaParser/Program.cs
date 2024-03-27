@@ -1,19 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using AngleSharp;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using SeleniumUndetectedChromeDriver;
-using AngleSharp.Scripting;
-using AngleSharp.Html.Parser;
 
-namespace ConsoleApplication1
+namespace BaltikaParsers
 {
     internal class Program
     {
@@ -28,11 +22,16 @@ namespace ConsoleApplication1
             var config = Configuration.Default;
             var context = BrowsingContext.New(config);
             var doc = await context.OpenAsync(req => req.Content(html));
-            var descriptoin = doc.Body.QuerySelectorAll("div.product-details");
-            var text = descriptoin.Select((m => m.TextContent));
-            Console.WriteLine(text);
+            var descriptionElements = doc.Body.QuerySelectorAll("div.product-details .product-params__row");
+            foreach (var element in descriptionElements)
+            {
+                string key = element.QuerySelector("th")?.TextContent;
+                string value = element.QuerySelector("td")?.TextContent;
+                Console.WriteLine($"Ключ: {key}");
+                Console.WriteLine($"Значение: {value}");
+                Console.WriteLine(new string('-',30));
+            }
         }
-
         public static UndetectedChromeDriver Setup()
         {
             var options = new ChromeOptions();
@@ -40,9 +39,8 @@ namespace ConsoleApplication1
             {
             });
             var driver = UndetectedChromeDriver.Create(options,
-                driverExecutablePath: @"C:\Users\ISokolovskiy\Desktop\HTML test\Solution1\HtmlTester\chromedriver.exe");
-            //driver.Manage().Window.Maximize();
-            driver.GoToUrl("https://www.wildberries.ru/catalog/24825388/detail.aspx");
+                driverExecutablePath: @"C:\Users\ISokolovskiy\Desktop\Angle Sharp test\HTML test\Solution1\HtmlTester\chromedriver.exe");
+            driver.Manage().Window.Maximize();
             return driver;
 
             // var options = new ChromeOptions();
@@ -50,5 +48,7 @@ namespace ConsoleApplication1
             // var driver = new ChromeDriver(options);
             // driver.Navigate().GoToUrl("https://www.okeydostavka.ru/msk/pivo-baltika-0-bezalkogol-noe-0-5-0-45l-zh-b");
         }
+        driver.GoToUrl("https://www.wildberries.ru/catalog/24825388/detail.aspx");
+        
     }
 }
