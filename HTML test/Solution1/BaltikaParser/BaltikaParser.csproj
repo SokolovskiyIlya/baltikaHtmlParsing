@@ -8,7 +8,7 @@
         <ProjectGuid>{FED90229-D9F7-44D8-A406-869035CB14BD}</ProjectGuid>
         <OutputType>Exe</OutputType>
         <AppDesignerFolder>Properties</AppDesignerFolder>
-        <RootNamespace>ConsoleApplication1</RootNamespace>
+        <RootNamespace>Parser</RootNamespace>
         <AssemblyName>BaltikaParser</AssemblyName>
         <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
         <FileAlignment>512</FileAlignment>
@@ -76,7 +76,7 @@
     <ItemGroup>
         <Compile Include="Program.cs"/>
         <Compile Include="Properties\AssemblyInfo.cs"/>
-        <Compile Include="WBparser.cs" />
+        <Compile Include="WebParser.cs" />
     </ItemGroup>
     <ItemGroup>
       <None Include="App.config" />
